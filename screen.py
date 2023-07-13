@@ -23,13 +23,24 @@ class screen:
             self.opjects.append(me)
             self.show(win,ind)
         if(kind=="inport"):
-            me = port(pic,x,y,30,500)
+            me = port(pic,x,y,60,500)
+            self.opjects.append(me)
+            self.show(win,ind)
+        if(kind=="outport"):
+            me = port(pic,x,y,500,60)
             self.opjects.append(me)
             self.show(win,ind)
 
-    def update(self,win,ind,dx,dy):
+    def update(self,win,ind,dx,dy,s):
         self.delete_last(win,ind)
-        self.opjects[ind-1].updateee(dx,dy)
+        # mouse[0]-=self.opjects[ind-1].picopic[0].place[0]
+        # mouse[1]-=self.opjects[ind-1].picopic[0].place[1]
+
+
+
+        self.opjects[ind-1].updateee(dx,dy,self.opjects[1],self.opjects[2],s)
+
+
         self.show(win,ind)
 
 

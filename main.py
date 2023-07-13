@@ -17,10 +17,14 @@ def main():
 
     scree=screen(WIN,"./pics/bg.png")
     scree.add_opj(WIN,"./pics/me.jpg",0,0,"opj")
+    scree.add_opj(WIN, "./pics/red.png", 300, 300, "inport")
+    scree.add_opj(WIN, "./pics/blue.png", 600, 300, "outport")
+
     WIN.blit(scree.surface, (0, 0))
     lastmousenow=()
     newmousenow=()
     chosen=-1
+    given_slope=0
     gameRuning = True
 
     clock = pygame.time.Clock()  # for the FPS
@@ -43,6 +47,12 @@ def main():
                 chosen=scree.every_pixel[lastmousenow[0]][lastmousenow[1]]
                 print(chosen)
 
+                for p in scree.opjects[chosen - 1].picopic:
+                    if (lastmousenow[0] == p.place[0] and lastmousenow[1] == p.place[1]):
+                        given_slope = p.slope
+                        break
+
+
                 holding=1
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and holding==1:
                 print("hehe")
@@ -51,17 +61,14 @@ def main():
                 newmousenow=pygame.mouse.get_pos()
                 dx=newmousenow[0]-lastmousenow[0]
                 dy=newmousenow[1]-lastmousenow[1]
-                scree.update(WIN,chosen,dx,dy)
+                scree.update(WIN,chosen,dx,dy,given_slope)
                 lastmousenow=newmousenow
                 print(lastmousenow,chosen)
 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 :
-                print("aaa")
-                scree.add_opj(WIN,"./pics/red.png",300,300,"inport")
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2 :
-                print("aaa")
-                scree.add_opj(WIN,"./pics/blue.png",600,300,"inport")
-
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3 :
+            scree.add_opj(WIN, "./pics/me.jpg", 0, 0, "opj")
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2 :
+            scree.add_opj(WIN, "./pics/blue.png", 600, 300, "outport")
 
         pygame.display.update()
 
